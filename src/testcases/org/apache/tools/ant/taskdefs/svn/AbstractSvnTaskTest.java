@@ -45,9 +45,9 @@ public class AbstractSvnTaskTest extends BuildFileTest {
     }
 
     public void testRevisionAttribute() {
-        File f = getProject().resolveFile("tmpdir/tpf/ebcdic.h");
+        File f = getProject().resolveFile("tmpdir/trunk/build.xml");
         assertTrue("starting empty", !f.exists());
-        expectLogContaining("revision-attribute", "A  tpf/ebcdic.h");
+        expectLogContaining("revision-attribute", "A  trunk/build.xml");
         assertTrue("now it is there", f.exists());
     }
 }

@@ -25,7 +25,7 @@
   <target name="setup">
     <mkdir dir="${tmpdir}"/>
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/jakarta/bcel/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/sandbox/antlibs/svn/trunk"
       dest="${tmpdir}"/>
   </target>
 
@@ -36,30 +36,30 @@
 
   <target name="start" depends="setup">
     <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" start="153000"/>
+      destfile="${tmpdir}/log.xml" start="161500"/>
   </target>
 
   <target name="startDate" depends="setup">
     <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" start="{2005-02-10}"/>
+      destfile="${tmpdir}/log.xml" start="{2005-04-18}"/>
   </target>
 
   <target name="end" depends="setup">
     <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" end="153000"/>
+      destfile="${tmpdir}/log.xml" end="161500"/>
   </target>
 
   <target name="endDate" depends="setup">
     <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" end="{2005-02-10}"/>
+      destfile="${tmpdir}/log.xml" end="{2005-04-18}"/>
   </target>
 
   <target name="report" depends="start">
     <style in="${tmpdir}/log.xml" 
       out="${tmpdir}/log.html" 
       style="src/etc/changelog.xsl">
-      <param name="title" expression="Jakarta BCEL ChangeLog"/>
-      <param name="repo" expression="http://svn.apache.org/repos/asf"/>
+      <param name="title" expression="Ant SVN Antlib ChangeLog"/>
+      <param name="repo" expression="http://svn.apache.org/repos/ant/sandbox/antlibs/svn"/>
     </style>
   </target>
 

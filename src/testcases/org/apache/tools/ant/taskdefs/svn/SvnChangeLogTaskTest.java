@@ -42,32 +42,32 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
 
     public void testLog() throws IOException {
         String log = executeTargetAndReadLogFully("log");
-        assertRev153687(log);
-        assertRev152685(log);
+        assertRev161885(log);
+        assertRev161469(log);
     }
 
     public void testStart() throws IOException {
         String log = executeTargetAndReadLogFully("start");
-        assertRev153687(log);
-        assertNoRev152685(log);
+        assertRev161885(log);
+        assertNoRev161469(log);
     }
 
     public void testStartDate() throws IOException {
         String log = executeTargetAndReadLogFully("startDate");
-        assertRev153687(log);
-        assertNoRev152685(log);
+        assertRev161885(log);
+        assertNoRev161469(log);
     }
 
     public void testEnd() throws IOException {
         String log = executeTargetAndReadLogFully("end");
-        assertNoRev153687(log);
-        assertRev152685(log);
+        assertNoRev161885(log);
+        assertRev161469(log);
     }
 
     public void testEndDate() throws IOException {
         String log = executeTargetAndReadLogFully("endDate");
-        assertNoRev153687(log);
-        assertRev152685(log);
+        assertNoRev161885(log);
+        assertRev161469(log);
     }
 
     private String executeTargetAndReadLogFully(String target) 
@@ -82,8 +82,8 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
         }
     }
 
-    private static final void assertRev153687(String log) {
-        int rev = log.indexOf("<revision>153687</revision>");
+    private static final void assertRev161885(String log) {
+        int rev = log.indexOf("<revision>161885</revision>");
         Assert.assertTrue(rev > -1);
         int entryBeforeRev = log.lastIndexOf("<entry>", rev);
         int entryAfterRev = log.indexOf("</entry>", rev);
@@ -92,25 +92,23 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
         Assert.assertTrue(entryAfterRev > -1);
 
         Assert
-            .assertTrue(log.lastIndexOf("<author><![CDATA[dbrosius]]></author>",
+            .assertTrue(log.lastIndexOf("<author><![CDATA[bodewig]]></author>",
                                         rev) > entryBeforeRev);
         Assert
-            .assertTrue(log.indexOf("<name><![CDATA[/jakarta/bcel/trunk/src"
-                                    + "/java/org/apache/bcel/util/BCELifier."
-                                    + "java]]></name>", rev) < entryAfterRev);
+            .assertTrue(log.indexOf("<name><![CDATA[/ant/sandbox/antlibs/"
+                                    + "antunit/trunk]]></name>", rev)
+                        < entryAfterRev);
         Assert
             .assertTrue(log.indexOf("<action>modified</action>", rev) 
                         < entryAfterRev);
         Assert
-            .assertTrue(log.indexOf("<message><![CDATA[Update BCELifier to "
-                                    + "handle the new method access flags "
-                                    + "(ACC_BRIDGE, ACC_VARARGS)]]></message>",
-                                    rev)
+            .assertTrue(log.indexOf("<message><![CDATA[Make sandboxes build"
+                                    + "]]></message>", rev)
                         < entryAfterRev);
     }
 
-    private static final void assertRev152685(String log) {
-        int rev = log.indexOf("<revision>152685</revision>");
+    private static final void assertRev161469(String log) {
+        int rev = log.indexOf("<revision>161469</revision>");
         Assert.assertTrue(rev > -1);
         int entryBeforeRev = log.lastIndexOf("<entry>", rev);
         int entryAfterRev = log.indexOf("</entry>", rev);
@@ -119,28 +117,28 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
         Assert.assertTrue(entryAfterRev > -1);
 
         Assert
-            .assertTrue(log.lastIndexOf("<![CDATA[(no author)]]>", rev) 
+            .assertTrue(log.lastIndexOf("<![CDATA[bodewig]]>", rev) 
                         > entryBeforeRev);
         Assert
-            .assertTrue(log.indexOf("<name><![CDATA[/jakarta/bcel/branches]]>"
-                                    + "</name>", rev) < entryAfterRev);
+            .assertTrue(log.indexOf("<name><![CDATA[/ant/sandbox/antlibs/"
+                                    + "antunit]]></name>", rev)
+                        < entryAfterRev);
         Assert
             .assertTrue(log.indexOf("<action>added</action>", rev) 
                         < entryAfterRev);
         Assert
-            .assertTrue(log.indexOf("<message><![CDATA[New repository "
-                                    + "initialized by cvs2svn.]]></message>",
-                                    rev)
+            .assertTrue(log.indexOf("<message><![CDATA[Import sandbox antlibs"
+                                    + "]]></message>", rev)
                         < entryAfterRev);
     }
 
-    private static final void assertNoRev153687(String log) {
-        int rev = log.indexOf("<revision>153687</revision>");
+    private static final void assertNoRev161885(String log) {
+        int rev = log.indexOf("<revision>161885</revision>");
         Assert.assertEquals(-1, rev);
     }
 
-    private static final void assertNoRev152685(String log) {
-        int rev = log.indexOf("<revision>152685</revision>");
+    private static final void assertNoRev161469(String log) {
+        int rev = log.indexOf("<revision>161469</revision>");
         Assert.assertEquals(-1, rev);
     }
 }

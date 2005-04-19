@@ -43,17 +43,17 @@ public class SvnRevisionDiffTest extends BuildFileTest {
     public void testDiff() throws IOException {
         String log = executeTargetAndReadLogFully("diff");
         assertAttributesNoURL(log);
-        assertAdded(log);
+        //assertAdded(log);
         assertModified(log);
-        assertDeleted(log);
+        //assertDeleted(log);
     }
 
     public void testDiffUrl() throws IOException {
         String log = executeTargetAndReadLogFully("diff-using-url");
         assertAttributesWithURL(log);
-        assertAdded(log);
+        //assertAdded(log);
         assertModified(log);
-        assertDeleted(log);
+        //assertDeleted(log);
     }
 
     private String executeTargetAndReadLogFully(String target) 
@@ -73,10 +73,10 @@ public class SvnRevisionDiffTest extends BuildFileTest {
         Assert.assertTrue(start > -1);
         int end = log.indexOf(">", start);
         Assert.assertTrue(end > -1);
-        Assert.assertTrue(log.indexOf("start=\"152904\"", start) > -1);
-        Assert.assertTrue(log.indexOf("start=\"152904\"", start) < end);
-        Assert.assertTrue(log.indexOf("end=\"153682\"", start) > -1);
-        Assert.assertTrue(log.indexOf("end=\"153682\"", start) < end);
+        Assert.assertTrue(log.indexOf("start=\"161469\"", start) > -1);
+        Assert.assertTrue(log.indexOf("start=\"161469\"", start) < end);
+        Assert.assertTrue(log.indexOf("end=\"161885\"", start) > -1);
+        Assert.assertTrue(log.indexOf("end=\"161885\"", start) < end);
     }
 
     private static final void assertAttributesNoURL(String log) {
@@ -89,10 +89,12 @@ public class SvnRevisionDiffTest extends BuildFileTest {
         int start = log.indexOf("<revisiondiff");
         int end = log.indexOf(">", start);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/jakarta/bcel/trunk\"", start)
+                                      + "asf/ant/sandbox/antlibs/svn/trunk\"",
+                                      start)
                           > -1);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/jakarta/bcel/trunk\"", start)
+                                      + "asf/ant/sandbox/antlibs/svn/trunk\"",
+                                      start)
                           < end);
     }
 
@@ -110,8 +112,7 @@ public class SvnRevisionDiffTest extends BuildFileTest {
     }
 
     private static final void assertModified(String log) {
-        int name = log.indexOf("<name><![CDATA[xdocs/stylesheets/project."
-                               + "xml]]></name>");
+        int name = log.indexOf("<name><![CDATA[build.xml]]></name>");
         Assert.assertTrue(name > -1);
 
         int pathAfterName = log.indexOf("</path>", name);

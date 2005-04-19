@@ -28,19 +28,19 @@
 
   <target name="setup" depends="dir-prep">
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/jakarta/bcel/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/sandbox/antlibs/svn/trunk"
       dest="${tmpdir}"/>
   </target>
 
   <target name="diff" depends="setup">
     <svn:revisiondiff failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/diff.xml" start="152904" end="153682"/>
+      destfile="${tmpdir}/diff.xml" start="161469" end="161885"/>
   </target>
 
   <target name="diff-using-url" depends="dir-prep">
     <svn:revisiondiff failonerror="true"
-      svnURL="http://svn.apache.org/repos/asf/jakarta/bcel/trunk"
-      destfile="${tmpdir}/diff.xml" start="152904" end="153682"/>
+      svnURL="http://svn.apache.org/repos/asf/ant/sandbox/antlibs/svn/trunk"
+      destfile="${tmpdir}/diff.xml" start="161469" end="161885"/>
   </target>
 
   <target name="report" depends="diff-using-url">

@@ -20,42 +20,42 @@
          default="all" xmlns:svn="antlib:org.apache.tools.ant.taskdefs.svn">
 
   <property name="tmpdir" value="tmpdir"/>
-  <property name="tpfdir" value="${tmpdir}/tpf"/>
-  <property name="file" value="ebcdic.h"/>
+  <property name="trunkdir" value="${tmpdir}/trunk"/>
+  <property name="file" value="build.xml"/>
 
   <target name="setup">
     <mkdir dir="${tmpdir}"/>
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/httpd/httpd/trunk/os/tpf/"
+      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/common/trunk/"
       dest="${tmpdir}"/>
   </target>
 
   <target name="all" depends="setup">
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${tpfdir}"/>
-    <svn:svn failonerror="true" dest="${tpfdir}">
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
+    <svn:svn failonerror="true" dest="${trunkdir}">
       <commandline>
         <argument value="up"/>
         <argument value="-r"/>
-        <argument value="83750"/>
+        <argument value="161881"/>
         <argument value="${file}"/>
       </commandline>
     </svn:svn>
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${tpfdir}"/>
-    <svn:svn failonerror="true" dest="${tpfdir}">
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
+    <svn:svn failonerror="true" dest="${trunkdir}">
       <commandline>
         <argument line="up -r HEAD ${file}" />
       </commandline>
     </svn:svn>
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${tpfdir}"/>
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
   </target>
 
   <target name="revision-attribute">
     <mkdir dir="${tmpdir}" />
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/httpd/httpd/trunk/os/tpf"
+      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/common/trunk/"
       dest="${tmpdir}"
       quiet="false"
-      revision="83750"/>
+      revision="161881"/>
   </target>
 
   <target name="cleanup">
