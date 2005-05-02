@@ -20,4 +20,8 @@
   <property file="build.properties"/>
 
   <import file="common/build.xml"/>
+
+  <target name="clean" depends="common.clean">
+    <delete dir="tmpdir"/>
+  </target>
 </project>
