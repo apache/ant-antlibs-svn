@@ -17,7 +17,7 @@
 -->
 
 <project name="changelog-test" basedir="../../../" 
-         default="log" xmlns:svn="antlib:org.apache.tools.ant.taskdefs.svn">
+         default="log" xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="tmpdir"/>
   <property name="trunkdir" value="${tmpdir}/trunk"/>

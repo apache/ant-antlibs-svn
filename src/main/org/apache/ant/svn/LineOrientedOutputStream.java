@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.tools.ant.taskdefs.svn;
+package org.apache.ant.svn;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -18,7 +18,7 @@
 
 <project name="revisiondiff-test" basedir="../../../" 
          default="diff-with-implicit-trunk"
-         xmlns:svn="antlib:org.apache.tools.ant.taskdefs.svn">
+         xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="tmpdir"/>
 

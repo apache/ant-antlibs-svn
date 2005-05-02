@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.tools.ant.taskdefs.svn;
+package org.apache.ant.svn;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

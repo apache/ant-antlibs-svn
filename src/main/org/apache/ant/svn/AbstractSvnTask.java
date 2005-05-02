@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.tools.ant.taskdefs.svn;
+package org.apache.ant.svn;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
