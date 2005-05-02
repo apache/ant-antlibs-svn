@@ -17,18 +17,18 @@
 <antlib>
   <taskdef
     name="svn"
-    classname="org.apache.tools.ant.taskdefs.svn.Svn"
+    classname="org.apache.ant.svn.Svn"
     />
   <taskdef
     name="changelog"
-    classname="org.apache.tools.ant.taskdefs.svn.SvnChangeLogTask"
+    classname="org.apache.ant.svn.SvnChangeLogTask"
     />
   <taskdef
     name="revisiondiff"
-    classname="org.apache.tools.ant.taskdefs.svn.SvnRevisionDiff"
+    classname="org.apache.ant.svn.SvnRevisionDiff"
     />
   <taskdef
     name="tagdiff"
-    classname="org.apache.tools.ant.taskdefs.svn.SvnTagDiff"
+    classname="org.apache.ant.svn.SvnTagDiff"
     />
 </antlib>
