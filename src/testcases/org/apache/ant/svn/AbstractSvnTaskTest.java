@@ -1,5 +1,5 @@
 /*
- * Copyright  2005 The Apache Software Foundation
+ * Copyright 2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -47,7 +47,26 @@ public class AbstractSvnTaskTest extends BuildFileTest {
     public void testRevisionAttribute() {
         File f = getProject().resolveFile("tmpdir/trunk/build.xml");
         assertTrue("starting empty", !f.exists());
-        expectLogContaining("revision-attribute", "A  trunk/build.xml");
+
+        // used to be
+        // expectLogContaining("revision-attribute", "A  trunk/build.xml");
+        // but the number of spaces between the status and the file depends
+        // on the version of the command line client
+        executeTarget("revision-attribute");
+        String log = getLog();
+        int buildFileIndex = log.indexOf("trunk/build.xml");
+        assertTrue("expected message about build.xml, log was: " + log,
+                   buildFileIndex > -1);
+        for (int i = buildFileIndex - 1; i > -1; --i) {
+            char c = log.charAt(i);
+            if (c != ' ') {
+                assertEquals('A', c);
+                break;
+            }
+        }
+        assertTrue("expexted 'A' status for build.xml, log was:" +log,
+                   buildFileIndex > -1);
+
         assertTrue("now it is there", f.exists());
     }
 }
