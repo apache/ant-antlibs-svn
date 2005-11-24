@@ -25,7 +25,7 @@
   <target name="setup">
     <mkdir dir="${tmpdir}"/>
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/ant/sandbox/antlibs/svn/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"
       dest="${tmpdir}"/>
   </target>
 
@@ -59,7 +59,7 @@
       out="${tmpdir}/log.html" 
       style="src/etc/changelog.xsl">
       <param name="title" expression="Ant SVN Antlib ChangeLog"/>
-      <param name="repo" expression="http://svn.apache.org/repos/ant/sandbox/antlibs/svn"/>
+      <param name="repo" expression="http://svn.apache.org/repos/ant/antlibs/svn"/>
     </style>
   </target>
 
