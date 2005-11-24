@@ -131,7 +131,8 @@ public class SvnTagDiffTest extends BuildFileTest {
     private static final void assertAdded1(String log) {
         int name = log.indexOf("<name><![CDATA[src/java/org/apache/bcel/"
                                + "Repository.java]]></name>");
-        Assert.assertTrue(name > -1);
+        Assert.assertTrue("expected element for Repository.java, log was: "
+                          + log, name > -1);
 
         int pathAfterName = log.indexOf("</path>", name);
         Assert.assertTrue(pathAfterName > -1);
