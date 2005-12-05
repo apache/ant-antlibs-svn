@@ -39,7 +39,7 @@
 
   <target name="diff-using-url" depends="dir-prep">
     <svn:revisiondiff failonerror="true"
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/sandbox/antlibs/svn/trunk"
       destfile="${tmpdir}/diff.xml" start="161469" end="161885"/>
   </target>
 
