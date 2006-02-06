@@ -89,11 +89,11 @@ public class SvnRevisionDiffTest extends BuildFileTest {
         int start = log.indexOf("<revisiondiff");
         int end = log.indexOf(">", start);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/ant/sandbox/antlibs/svn/trunk\"",
+                                      + "asf/ant/antlibs/svn/trunk\"",
                                       start)
                           > -1);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/ant/sandbox/antlibs/svn/trunk\"",
+                                      + "asf/ant/antlibs/svn/trunk\"",
                                       start)
                           < end);
     }
