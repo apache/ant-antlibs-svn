@@ -117,7 +117,7 @@ stores the files in &quot;<code>${ws.dir}</code>&quot;.</p>
 <p>updates the working copy that has previously been checked out into
 &quot;<code>${ws.dir}</code>&quot;.</p>
 
-<pre>  &lt;svn command=&quot;-q diff&quot; output=&quot;patch.txt&quot;/&gt;</pre>
+<pre>  &lt;svn subcommand=&quot;-q diff&quot; output=&quot;patch.txt&quot;/&gt;</pre>
 
 <p>silently (<code>-q</code>) creates a file called <code>patch.txt</code> which contains a unified diff which can be used as input to patch.
 The equivalent, using  <code>&lt;commandline&gt;</code> elements, is:
@@ -144,7 +144,7 @@ Each will inherit the <code>failonerror</code> and other &quot;global&quot; para
 from the <code>&lt;svn&gt;</code> element.
 </p>
 
-<pre>  &lt;svn command=&quot;update&quot;/&gt;</pre>
+<pre>  &lt;svn subcommand=&quot;update&quot;/&gt;</pre>
 <p>Updates from the head of repository creating any new directories as necessary.</p>
 <p>See <a href="http://svnbook.red-bean.com/en/1.1/ch09.html#svn-ch-9-sect-1" target="_top">Version Control with Subversion</a> for details,
 specifically the <a href="http://svnbook.red-bean.com/en/1.1/ch09.html#svn-ch-9-sect-1" target="_top">The Subversion Command Line Client: svn</a></p>
