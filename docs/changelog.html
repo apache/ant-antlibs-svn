@@ -67,7 +67,7 @@ command line in the target directory in which you are working.</p>
   </tr>
   <tr>
     <td valign="top">dir</td>
-    <td valign="top">The directory from which to run the CVS <em>log</em>
+    <td valign="top">The directory from which to run the SVN <em>log</em>
      command.</td>
     <td align="center" valign="top">No; defaults to ${basedir}.</td>
   </tr>
@@ -202,8 +202,8 @@ generate a HTML report based on the xml output. The following example
 illustrates how to generate a HTML report from the XML report.</p>
 
 <pre>
-        &lt;style in="changelog.xml" 
-               out="changelog.html" 
+        &lt;style in="changelog.xml"
+               out="changelog.html"
                style="your-path-to/etc/changelog.xsl"&gt;
           &lt;param name="title" expression="Jakarta BCEL ChangeLog"/&gt;
           &lt;param name="repo" expression="http://svn.apache.org/repos/asf"/&gt;
@@ -229,4 +229,3 @@ illustrates how to generate a HTML report from the XML report.</p>
 
 </body>
 </html>
-
