@@ -35,6 +35,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.LogOutputStream;
 import org.apache.tools.ant.taskdefs.PumpStreamHandler;
+import org.apache.tools.ant.taskdefs.condition.Os;
 import org.apache.tools.ant.taskdefs.cvslib.CvsUser;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.util.FileUtils;
@@ -68,6 +69,9 @@ import org.apache.tools.ant.util.FileUtils;
  * @ant.task name="svnchangelog" category="scm"
  */
 public class SvnChangeLogTask extends AbstractSvnTask {
+    // ? On windows ?
+    private static final boolean ON_WINDOWS = Os.isFamily("windows");
+
     /** User list */
     private File usersFile;
 
@@ -165,7 +169,16 @@ public class SvnChangeLogTask extends AbstractSvnTask {
 
         final SimpleDateFormat outputDate =
             new SimpleDateFormat("{yyyy-MM-dd}");
-        setStart(outputDate.format(new Date(time)));
+        String formattedDate = outputDate.format(new Date(time));
+        if (ON_WINDOWS) {
+            // BugZilla: 40704
+            // http://issues.apache.org/bugzilla/show_bug.cgi?id=40704
+            // cygwin svn has a bug in handling parameters with {}
+            // putting quotes around the date fixes this, the
+            // fix also works for the normal svn cli command.
+            formattedDate = "\"" + formattedDate + "\"";
+        }
+        setStart(formattedDate);
     }
 
 
@@ -397,4 +410,3 @@ public class SvnChangeLogTask extends AbstractSvnTask {
         return true;
     }
 }
-
