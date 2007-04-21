@@ -561,7 +561,7 @@ public abstract class AbstractSvnTask extends Task {
 
     /**
      * If true, be verbose.
-     * @param q  if true, be verbose.
+     * @param v  if true, be verbose.
      */
     public void setVerbose(boolean v) {
         verbose = v;
