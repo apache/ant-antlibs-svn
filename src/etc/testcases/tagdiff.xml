@@ -22,6 +22,9 @@
          xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="tmpdir"/>
+  <property 
+    name="baseURL"
+    value="http://svn.apache.org/repos/asf/ant/antlibs/antunit/"/>
 
   <target name="dir-prep">
     <mkdir dir="${tmpdir}"/>
@@ -29,23 +32,23 @@
 
   <target name="diff-with-two-tags" depends="dir-prep">
     <svn:tagdiff failonerror="true"
-      baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
+      baseURL="${baseURL}"
       destfile="${tmpdir}/diff.xml"
-      tag2="BCEL_5_0" tag1="initial"/>
+      tag2="10_BETA1" tag1="10"/>
   </target>
 
   <target name="diff-with-explicit-trunk" depends="dir-prep">
     <svn:tagdiff failonerror="true"
-      baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
+      baseURL="${baseURL}"
       destfile="${tmpdir}/diff.xml"
-      tag1="BCEL_5_0" tag2="trunk"/>
+      tag1="10_BETA1" tag2="trunk"/>
   </target>
 
   <target name="diff-with-implicit-trunk" depends="dir-prep">
     <svn:tagdiff failonerror="true"
-      baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
+      baseURL="${baseURL}"
       destfile="${tmpdir}/diff.xml"
-      tag1="BCEL_5_0"/>
+      tag1="10_BETA1"/>
   </target>
 
   <!--target name="report" depends="diff-with-implicit-trunk"-->
@@ -53,8 +56,8 @@
     <style in="/tmp/diff.xml" 
       out="/tmp/diff.html" 
       style="src/etc/diff.xsl">
-      <param name="title" expression="Jakarta BCEL diff"/>
-      <param name="repo" expression="http://svn.apache.org/repos/asf/jakarta/bcel/trunk"/>
+      <param name="title" expression="ANT UNIT DIFF"/>
+      <param name="repo" expression="${baseURL}"/>
     </style>
   </target>
 

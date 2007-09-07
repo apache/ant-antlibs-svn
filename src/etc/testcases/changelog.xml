@@ -56,12 +56,12 @@
   </target>
 
   <target name="report" depends="start">
-    <style in="${tmpdir}/log.xml" 
+    <xslt in="${tmpdir}/log.xml" 
       out="${tmpdir}/log.html" 
       style="src/etc/changelog.xsl">
       <param name="title" expression="Ant SVN Antlib ChangeLog"/>
       <param name="repo" expression="http://svn.apache.org/repos/ant/antlibs/svn"/>
-    </style>
+    </xslt>
   </target>
 
   <target name="cleanup">
