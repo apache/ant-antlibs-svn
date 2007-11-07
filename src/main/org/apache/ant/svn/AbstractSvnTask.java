@@ -37,7 +37,7 @@ import org.apache.tools.ant.types.Environment;
 import org.apache.tools.ant.util.StringUtils;
 
 /**
- * Just like Ant's built-in CVS task, the main loginc lives in this
+ * Just like Ant's built-in CVS task, the main logic lives in this
  * abstract task.
  */
 public abstract class AbstractSvnTask extends Task {
