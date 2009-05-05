@@ -43,9 +43,18 @@ BASEURL
   -----&gt; tags
            |
            |
-           ----------&gt; tag1
-           ----------&gt; tag2
+           ----------&gt; fromTag
+           ----------&gt; toTag
+  -----&gt; branches
+           |
+           |
+           ----------&gt; fromBranch
+           ----------&gt; toBranch
 </pre>
+
+<p>It is possible to compare two branches, two tags or tags and
+  branches.  The magic name "trunk" can be used in as from* or to* in
+  order to compare a tag/branch to trunk.</p>
 
 <h3>Parameters</h3>
 <table border="1" cellpadding="2" cellspacing="0">
@@ -55,14 +64,30 @@ BASEURL
     <td align="center" valign="top"><b>Required</b></td>
   </tr>
   <tr>
-    <td valign="top">tag1</td>
+    <td valign="top">fromTag</td>
     <td valign="top">The first tag.</td>
-    <td align="center" valign="top">Yes.</td>
+    <td align="center" valign="top" rowspan="3">One of the three.</td>
+  </tr>
+  <tr>
+    <td valign="top">fromBranch</td>
+    <td valign="top">The first branch.</td>
+  </tr>
+  <tr>
+    <td valign="top">tag1</td>
+    <td valign="top"><b>Deprecated.</b> Equivalent to fromTag.</td>
+  </tr>
+  <tr>
+    <td valign="top">toTag</td>
+    <td valign="top">The second tag.</td>
+    <td align="center" valign="top" rowspan="3">No, default is "trunk/"</td>
+  </tr>
+  <tr>
+    <td valign="top">toBranch</td>
+    <td valign="top">The second branch.</td>
   </tr>
   <tr>
     <td valign="top">tag2</td>
-    <td valign="top">The second tag.</td>
-    <td align="center" valign="top">No, defaults to "trunk/"</td>
+    <td valign="top"><b>Deprecated.</b> Equivalent to toTag.</td>
   </tr>
   <tr>
     <td valign="top">destfile</td>
@@ -97,8 +122,8 @@ BASEURL
   &lt;tagdiff failonerror="true"
       baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
       destfile="diff.xml"
-      tag1="initial"
-      tag2="BCEL_5_0"
+      fromTag="initial"
+      toTag="BCEL_5_0"
   /&gt;
 </pre>
 
@@ -111,8 +136,8 @@ into the file <code>diff.xml</code>.</p>
   &lt;tagdiff failonerror="true"
       baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
       destfile="diff.xml"
-      tag1="BCEL_5_0"
-      tag2="trunk"
+      fromTag="BCEL_5_0"
+      toBranch="trunk"
   /&gt;
 </pre>
 
@@ -125,11 +150,11 @@ changes into the file <code>diff.xml</code>.</p>
   &lt;tagdiff failonerror="true"
       baseURL="http://svn.apache.org/repos/asf/jakarta/bcel/"
       destfile="diff.xml"
-      tag1="BCEL_5_0"
+      fromTag="BCEL_5_0"
   /&gt;
 </pre>
 
-<p>Does the same, using <code>trunk</code> as <code>tag2</code>
+<p>Does the same, using <code>trunk</code> as <code>to*</code>
 implicitly.</p>
 
 <h4>Generate Report</h4>
@@ -150,7 +175,7 @@ illustrates how to generate a HTML report from the XML report.</p>
 <h4>(Shortened) Example Output</h4>
 <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;tagdiff tag1="BCEL_5_0" svnurl="http://svn.apache.org/repos/asf/jakarta/bcel/" &gt;
+&lt;tagdiff fromTag="BCEL_5_0" svnurl="http://svn.apache.org/repos/asf/jakarta/bcel/" &gt;
   &lt;path&gt;
     &lt;name&gt;&lt;![CDATA[default.properties]]&gt;&lt;/name&gt;
     &lt;action&gt;added&lt;/action&gt;

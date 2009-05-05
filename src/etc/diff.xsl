@@ -60,7 +60,7 @@
           <h1>
             <a name="top"><xsl:value-of select="$title"/></a>
           </h1>
-          diff between <xsl:value-of select="@start"/><xsl:value-of select="@tag1"/> and <xsl:value-of select="@end"/><xsl:value-of select="@tag2"/>
+          diff between <xsl:value-of select="@start"/><xsl:value-of select="@fromTag"/><xsl:value-of select="@fromBranch"/> and <xsl:value-of select="@end"/><xsl:value-of select="@toTag"/><xsl:value-of select="@toBranch"/>
           <p align="right">Designed for use with <a href="http://ant.apache.org/">Apache Ant</a>.</p>
           <hr size="2"/>
 	<a name="TOP"/>

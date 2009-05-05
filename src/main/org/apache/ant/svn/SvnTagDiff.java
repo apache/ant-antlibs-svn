@@ -44,18 +44,39 @@ import org.apache.tools.ant.util.FileUtils;
  *   -----&gt; tags
  *            |
  *            |
- *            ----------&gt; tag1
- *            ----------&gt; tag2
+ *            ----------&gt; fromTag
+ *            ----------&gt; toTag
+ *   -----&gt; branches
+ *            |
+ *            |
+ *            ----------&gt; fromBranch
+ *            ----------&gt; toBranch
  * </pre>
  *
- * It produces an XML output representing the list of changes.
+ * <p>It produces an XML output representing the list of changes.</p>
+ * 
+ * <p>The task will compare any combination of branches and tags.  To
+ * compare a newer branch to an older tag use the fromTag and toBranch
+ * attributes.  To compare two tags use fromTag and toTag All
+ * combinations work as expected.</p>
+ * 
+ * <p>You can specify the trunk for any of the four branch/tag
+ * attibutes by using the special value "trunk" (without the quotes).</p>
+ * 
+ * <p>The older syntax using tag1 tag2 attributes is deprecated (but
+ * it still works)</p>
+ * 
  * <PRE>
  * &lt;!-- Root element --&gt;
  * &lt;!ELEMENT tagdiff ( paths? ) &gt;
  * &lt;!-- First tag --&gt;
- * &lt;!ATTLIST tagdiff tag1 NMTOKEN #IMPLIED &gt;
+ * &lt;!ATTLIST tagdiff fromTag NMTOKEN #IMPLIED &gt;
  * &lt;!-- Second tag --&gt;
- * &lt;!ATTLIST tagdiff tag2 NMTOKEN #IMPLIED &gt;
+ * &lt;!ATTLIST tagdiff toTag NMTOKEN #IMPLIED &gt;
+ * &lt;!-- First branch --&gt;
+ * &lt;!ATTLIST tagdiff fromBranch NMTOKEN #IMPLIED &gt;
+ * &lt;!-- Second branch --&gt;
+ * &lt;!ATTLIST tagdiff toBranch NMTOKEN #IMPLIED &gt;
  * &lt;!-- Subversion BaseURL --&gt;
  * &lt;!ATTLIST tagdiff svnurl NMTOKEN #IMPLIED &gt;
  *
@@ -78,13 +99,20 @@ public class SvnTagDiff extends AbstractSvnTask {
     /**
      * The earliest revision from which diffs are to be included in the report.
      */
-    private String tag1;
+    private String fromTag;
 
     /**
      * The latest revision from which diffs are to be included in the report.
      */
-    private String tag2;
-
+    private String toTag;
+    /**
+     * The earliest revision from which diffs are to be included in the report.
+     */
+    private String fromBranch;
+    /**
+     * The latest revision from which diffs are to be included in the report.
+     */
+    private String toBranch;
     /**
      * The file in which to write the diff report.
      */
@@ -94,14 +122,43 @@ public class SvnTagDiff extends AbstractSvnTask {
      * Base URL.
      */
     private String baseURL;
+    /**
+     * the name of the older branch or tag
+     */
+    private String fromCopy;
+    /**
+     * the name of the newer branch or tag
+     */
+    private String toCopy;
+    /**
+     * Base the name of the attribute in the output
+     * e.g "fromBranch" or "fromTag" for the older copy
+     */
+    private String fromName;
+    /**
+     * Base the name of the attribute in the output
+     * e.g "toBranch" or "toTag" for the newer copy
+     */
+    private String toName;
+    /**
+     * Base the name of the directory of branches or tags
+     * e.g "branches/" or "tags/" for the older copy
+     */
+    private String fromDir;
+    /**
+     * Base the name of the directory of branches or tags
+     * e.g "branches/" or "tags/" for the newer copy
+     */
+    private String toDir; 
+
 
     /**
      * Set the first tag.
      *
      * @param s the first tag.
      */
-    public void setTag1(String s) {
-        tag1 = s;
+    public void setFromTag(String s) {
+        fromTag = s;
     }
 
     /**
@@ -109,8 +166,46 @@ public class SvnTagDiff extends AbstractSvnTask {
      *
      * @param s the second tag.
      */
+    public void setToTag(String s) {
+        toTag = s;
+    }
+
+    /**
+     * Set the first tag.
+     *
+     * @param s the first tag.
+     * @deprecated use fromTag
+     */
+    public void setTag1(String s) {
+        setFromTag(s);
+    }
+
+    /**
+     * Set the second tag.
+     *
+     * @param s the second tag.
+     * @deprecated use toTag
+     */
     public void setTag2(String s) {
-        tag2 = s;
+        setToTag(s);
+    }
+
+    /**
+     * Set the first branch.
+     *
+     * @param s the first branch.
+     */
+    public void setFromBranch(String s) {
+        fromBranch = s;
+    }
+
+    /**
+     * Set the second branch.
+     *
+     * @param s the second branch.
+     */
+    public void setToBranch(String s) {
+        toBranch = s;
     }
 
     /**
@@ -143,28 +238,19 @@ public class SvnTagDiff extends AbstractSvnTask {
         // validate the input parameters
         validate();
 
+        // sort out whats tags and whats branches
+        this.fromCopy = fromTag !=null ? fromTag : fromBranch;
+        this.toCopy = toTag != null ? toTag : toBranch;
+        this.fromName = fromTag != null ? "fromTag" : "fromBranch";
+        this.toName = toTag != null ? "toTag" : "toBranch";
+        this.fromDir = fromTag != null ? "tags/" : "branches/";
+        this.toDir = toTag != null ? "tags/" : "branches/";
+
         // build the rdiff command
         setSubCommand("diff");
         addSubCommandArgument("--no-diff-deleted");
-        if (tag1.equals("trunk") || tag1.equals("trunk/")) {
-            addSubCommandArgument(baseURL + "trunk/");
-        } else {
-            if (tag1.endsWith("/")) {
-                addSubCommandArgument(baseURL + "tags/" + tag1);
-            } else {
-                addSubCommandArgument(baseURL + "tags/" + tag1 + "/");
-            }
-        }
-        if (tag2 == null || tag2.equals("trunk") || tag2.equals("trunk/")) {
-            addSubCommandArgument(baseURL + "trunk/");
-        } else {
-            if (tag2.endsWith("/")) {
-                addSubCommandArgument(baseURL + "tags/" + tag2);
-            } else {
-                addSubCommandArgument(baseURL + "tags/" + tag2 + "/");
-            }
-        }
-        
+        addDiffArguments();
+
         File tmpFile = null;
         try {
             tmpFile = 
@@ -180,12 +266,34 @@ public class SvnTagDiff extends AbstractSvnTask {
 
             // write the revision diff
             SvnDiffHandler.writeDiff(mydestfile, entries, "tagdiff",
-                                     "tag1", tag1, "tag2", 
-                                     tag2 == null ? "trunk" : tag2, 
+                                     fromName, fromCopy, toName, 
+                                     toCopy, 
                                      baseURL);
         } finally {
             if (tmpFile != null) {
                 tmpFile.delete();
+            }
+        }
+    }
+
+    private void addDiffArguments(){
+        if (fromCopy.equals("trunk") || fromCopy.equals("trunk/")) {
+            addSubCommandArgument(baseURL + "trunk/");
+        } else {
+            if (fromCopy.endsWith("/")) {
+                addSubCommandArgument(baseURL + fromDir + fromCopy);
+            } else {
+                addSubCommandArgument(baseURL + fromDir + fromCopy + "/");
+            }
+        }
+        if (toCopy == null || toCopy.equals("trunk")
+            || toCopy.equals("trunk/")) {
+            addSubCommandArgument(baseURL + "trunk/");
+        } else {
+            if (toCopy.endsWith("/")) {
+                addSubCommandArgument(baseURL + toDir + toCopy);
+            } else {
+                addSubCommandArgument(baseURL + toDir + toCopy + "/");
             }
         }
     }
@@ -200,8 +308,8 @@ public class SvnTagDiff extends AbstractSvnTask {
             throw new BuildException("Destfile must be set.");
         }
 
-        if (null == tag1) {
-            throw new BuildException("tag1 must be set.");
+        if (null == fromTag && null== fromBranch) {
+            throw new BuildException("fromTag or fromBranch must be set.");
         }
 
         if (null == baseURL) {
