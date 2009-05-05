@@ -55,7 +55,8 @@ public class AbstractSvnTaskTest extends BuildFileTest {
         // on the version of the command line client
         executeTarget("revision-attribute");
         String log = getLog();
-        int buildFileIndex = log.indexOf("trunk/build.xml");
+        int buildFileIndex = Math.max(log.indexOf("trunk/build.xml"),
+                                      log.indexOf("trunk\\build.xml"));
         assertTrue("expected message about build.xml, log was: " + log,
                    buildFileIndex > -1);
         for (int i = buildFileIndex - 1; i > -1; --i) {
