@@ -91,6 +91,9 @@ import org.apache.tools.ant.util.FileUtils;
  */
 public class SvnTagDiff extends AbstractSvnTask {
 
+    private static final String TRUNK = "trunk";
+    private static final String TRUNK_SLASH = TRUNK + "/";
+
     /**
      * Used to create the temp file for svn log
      */
@@ -240,7 +243,8 @@ public class SvnTagDiff extends AbstractSvnTask {
 
         // sort out whats tags and whats branches
         this.fromCopy = fromTag !=null ? fromTag : fromBranch;
-        this.toCopy = toTag != null ? toTag : toBranch;
+        this.toCopy = toTag != null ? toTag 
+            : toBranch != null ? toBranch : TRUNK;
         this.fromName = fromTag != null ? "fromTag" : "fromBranch";
         this.toName = toTag != null ? "toTag" : "toBranch";
         this.fromDir = fromTag != null ? "tags/" : "branches/";
@@ -277,8 +281,8 @@ public class SvnTagDiff extends AbstractSvnTask {
     }
 
     private void addDiffArguments(){
-        if (fromCopy.equals("trunk") || fromCopy.equals("trunk/")) {
-            addSubCommandArgument(baseURL + "trunk/");
+        if (fromCopy.equals(TRUNK) || fromCopy.equals(TRUNK_SLASH)) {
+            addSubCommandArgument(baseURL + TRUNK_SLASH);
         } else {
             if (fromCopy.endsWith("/")) {
                 addSubCommandArgument(baseURL + fromDir + fromCopy);
@@ -286,9 +290,8 @@ public class SvnTagDiff extends AbstractSvnTask {
                 addSubCommandArgument(baseURL + fromDir + fromCopy + "/");
             }
         }
-        if (toCopy == null || toCopy.equals("trunk")
-            || toCopy.equals("trunk/")) {
-            addSubCommandArgument(baseURL + "trunk/");
+        if (toCopy.equals(TRUNK) || toCopy.equals(TRUNK_SLASH)) {
+            addSubCommandArgument(baseURL + TRUNK_SLASH);
         } else {
             if (toCopy.endsWith("/")) {
                 addSubCommandArgument(baseURL + toDir + toCopy);

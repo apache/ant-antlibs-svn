@@ -49,16 +49,16 @@ public class SvnTagDiffTest extends BuildFileTest {
 
     public void testDiffWithExplicitTrunk() throws IOException {
         String log = executeTargetAndReadLogFully("diff-with-explicit-trunk");
-        assertDiffWithTrunk(log);
+        assertDiffWithTrunk(log, "toTag");
     }
 
     public void testDiffWithImplicitTrunk() throws IOException {
         String log = executeTargetAndReadLogFully("diff-with-implicit-trunk");
-        assertDiffWithTrunk(log);
+        assertDiffWithTrunk(log, "toBranch");
     }
 
-    private static void assertDiffWithTrunk(String log) {
-        assertAttributes(log, "10_BETA1", "trunk");
+    private static void assertDiffWithTrunk(String log, String tag2Name) {
+        assertAttributes(log, "10_BETA1", tag2Name, "trunk");
         assertAdded(log);
         assertModified(log);
         assertDeleted(log);
@@ -78,14 +78,21 @@ public class SvnTagDiffTest extends BuildFileTest {
 
     private static final void assertAttributes(String log, String tag1,
                                                String tag2) {
+        assertAttributes(log, tag1, "toTag", tag2);
+    }
+
+    private static final void assertAttributes(String log, String tag1,
+                                               String tag2Name, String tag2) {
         int start = log.indexOf("<tagdiff");
         Assert.assertTrue(start > -1);
         int end = log.indexOf(">", start);
         Assert.assertTrue(end > -1);
-        Assert.assertTrue(log.indexOf("tag1=\"" + tag1 + "\"", start) > -1);
-        Assert.assertTrue(log.indexOf("tag1=\"" + tag1 + "\"", start) < end);
-        Assert.assertTrue(log.indexOf("tag2=\"" + tag2 + "\"", start) > -1);
-        Assert.assertTrue(log.indexOf("tag2=\"" + tag2 + "\"", start) < end);
+        Assert.assertTrue(log.indexOf("fromTag=\"" + tag1 + "\"", start) > -1);
+        Assert.assertTrue(log.indexOf("fromTag=\"" + tag1 + "\"", start) < end);
+        Assert.assertTrue(log.indexOf(tag2Name + "=\"" + tag2 + "\"",
+                                      start) > -1);
+        Assert.assertTrue(log.indexOf(tag2Name + "=\"" + tag2 + "\"",
+                                      start) < end);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/",
                                       start) > -1);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/",
