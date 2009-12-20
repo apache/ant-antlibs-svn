@@ -66,7 +66,7 @@ public class AbstractSvnTaskTest extends BuildFileTest {
                 break;
             }
         }
-        assertTrue("expexted 'A' status for build.xml, log was:" +log,
+        assertTrue("expected 'A' status for build.xml, log was:" +log,
                    buildFileIndex > -1);
 
         assertTrue("now it is there", f.exists());
