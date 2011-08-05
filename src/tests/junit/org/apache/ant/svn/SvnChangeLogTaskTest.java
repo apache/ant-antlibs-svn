@@ -86,7 +86,8 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
 
     private static final void assertRev161885(String log) {
         int rev = log.indexOf("<revision>161885</revision>");
-        Assert.assertTrue(rev > -1);
+        Assert.assertTrue("Expected to find revision 161885, but log was "
+                          + log, rev > -1);
         int entryBeforeRev = log.lastIndexOf("<entry>", rev);
         int entryAfterRev = log.indexOf("</entry>", rev);
 
