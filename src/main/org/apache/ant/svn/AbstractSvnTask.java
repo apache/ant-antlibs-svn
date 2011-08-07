@@ -247,6 +247,13 @@ public abstract class AbstractSvnTask extends Task {
      */
     protected void runCommand(Commandline toExecute) throws BuildException {
         Environment env = new Environment();
+        Environment.Variable lang = new Environment.Variable();
+        lang.setKey("LC_ALL");
+        lang.setValue("C");
+        env.addVariable(lang);
+        lang = new Environment.Variable();
+        lang.setKey("LANG");
+        lang.setValue("C");
 
         //
         // Just call the getExecuteStreamHandler() and let it handle
