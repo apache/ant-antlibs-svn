@@ -44,17 +44,13 @@ public class SvnRevisionDiffTest extends BuildFileTest {
     public void testDiff() throws IOException {
         String log = executeTargetAndReadLogFully("diff");
         assertAttributesNoURL(log);
-        //assertAdded(log);
         assertModified(log);
-        //assertDeleted(log);
     }
 
     public void testDiffUrl() throws IOException {
         String log = executeTargetAndReadLogFully("diff-using-url");
         assertAttributesWithURL(log);
-        //assertAdded(log);
         assertModified(log);
-        //assertDeleted(log);
     }
 
     private String executeTargetAndReadLogFully(String target) 
@@ -100,19 +96,6 @@ public class SvnRevisionDiffTest extends BuildFileTest {
                           < end);
     }
 
-    private static final void assertAdded(String log) {
-        int name = log.indexOf("<![CDATA[src/java/org/apache/bcel/classfile/"
-                               + "ElementValuePair.java]]>");
-        Assert.assertTrue(name > -1);
-
-        int pathAfterName = log.indexOf("</path>", name);
-        Assert.assertTrue(pathAfterName > -1);
-
-        Assert.assertTrue(log.indexOf("<action>added</action>", name) > -1);
-        Assert.assertTrue(log.indexOf("<action>added</action>", name) 
-                          < pathAfterName);
-    }
-
     private static final void assertModified(String log) {
         int name = log.indexOf("<name><![CDATA[build.xml]]></name>");
         Assert.assertTrue(name > -1);
@@ -125,15 +108,4 @@ public class SvnRevisionDiffTest extends BuildFileTest {
                           < pathAfterName);
     }
 
-    private static final void assertDeleted(String log) {
-        int name = log.indexOf("<name><![CDATA[lib/CCK.jar]]></name>");
-        Assert.assertTrue(name > -1);
-
-        int pathAfterName = log.indexOf("</path>", name);
-        Assert.assertTrue(pathAfterName > -1);
-
-        Assert.assertTrue(log.indexOf("<action>deleted</action>", name) > -1);
-        Assert.assertTrue(log.indexOf("<action>deleted</action>", name) 
-                          < pathAfterName);
-    }
 }
