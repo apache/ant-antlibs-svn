@@ -21,46 +21,46 @@
          default="log" xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="${java.io.tmpdir}/svnantlib"/>
-  <property name="trunkdir" value="${tmpdir}/trunk"/>
+  <property name="sitedir" value="${tmpdir}/svn"/>
 
   <target name="setup">
     <mkdir dir="${tmpdir}"/>
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"
       dest="${tmpdir}"/>
   </target>
 
   <target name="log" depends="setup">
-    <svn:changelog failonerror="true" dest="${trunkdir}"
+    <svn:changelog failonerror="true" dest="${sitedir}"
       destfile="${tmpdir}/log.xml" />
   </target>
 
   <target name="start" depends="setup">
-    <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" start="161500"/>
+    <svn:changelog failonerror="true" dest="${sitedir}"
+      destfile="${tmpdir}/log.xml" start="450000"/>
   </target>
 
   <target name="startDate" depends="setup">
-    <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" start="{2005-04-18}"/>
+    <svn:changelog failonerror="true" dest="${sitedir}"
+      destfile="${tmpdir}/log.xml" start="{2006-10-01}"/>
   </target>
 
   <target name="end" depends="setup">
-    <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" end="161500"/>
+    <svn:changelog failonerror="true" dest="${sitedir}"
+      destfile="${tmpdir}/log.xml" end="450000"/>
   </target>
 
   <target name="endDate" depends="setup">
-    <svn:changelog failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/log.xml" end="{2005-04-18}"/>
+    <svn:changelog failonerror="true" dest="${sitedir}"
+      destfile="${tmpdir}/log.xml" end="{2006-10-01}"/>
   </target>
 
   <target name="report" depends="start">
     <xslt in="${tmpdir}/log.xml" 
       out="${tmpdir}/log.html" 
       style="src/etc/changelog.xsl">
-      <param name="title" expression="Ant SVN Antlib ChangeLog"/>
-      <param name="repo" expression="http://svn.apache.org/repos/ant/antlibs/svn"/>
+      <param name="title" expression="Ant SVN Antlib Site ChangeLog"/>
+      <param name="repo" expression="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"/>
     </xslt>
   </target>
 

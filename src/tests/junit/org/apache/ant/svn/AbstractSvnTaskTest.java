@@ -47,7 +47,7 @@ public class AbstractSvnTaskTest extends BuildFileTest {
 
     public void testRevisionAttribute() {
         String tmpDir = getProject().getProperty("tmpdir");
-        File f = getProject().resolveFile(tmpDir + "/trunk/build.xml");
+        File f = getProject().resolveFile(tmpDir + "/svn/index.xml");
         assertTrue("starting empty", !f.exists());
 
         // used to be
@@ -56,9 +56,9 @@ public class AbstractSvnTaskTest extends BuildFileTest {
         // on the version of the command line client
         executeTarget("revision-attribute");
         String log = getLog();
-        int buildFileIndex = Math.max(log.indexOf("trunk/build.xml"),
-                                      log.indexOf("trunk\\build.xml"));
-        assertTrue("expected message about build.xml, log was: " + log,
+        int buildFileIndex = Math.max(log.indexOf("svn/index.xml"),
+                                      log.indexOf("svn\\index.xml"));
+        assertTrue("expected message about index.xml, log was: " + log,
                    buildFileIndex > -1);
         for (int i = buildFileIndex - 1; i > -1; --i) {
             char c = log.charAt(i);
@@ -67,7 +67,7 @@ public class AbstractSvnTaskTest extends BuildFileTest {
                 break;
             }
         }
-        assertTrue("expected 'A' status for build.xml, log was:" +log,
+        assertTrue("expected 'A' status for index.xml, log was:" +log,
                    buildFileIndex > -1);
 
         assertTrue("now it is there", f.exists());

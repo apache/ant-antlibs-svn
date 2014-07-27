@@ -21,7 +21,7 @@
          default="diff" xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="${java.io.tmpdir}/svnantlib"/>
-  <property name="trunkdir" value="${tmpdir}/trunk"/>
+  <property name="sitedir" value="${tmpdir}/svn"/>
 
   <target name="dir-prep">
     <mkdir dir="${tmpdir}"/>
@@ -29,27 +29,27 @@
 
   <target name="setup" depends="dir-prep">
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"
+      svnURL="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"
       dest="${tmpdir}"/>
   </target>
 
   <target name="diff" depends="setup">
-    <svn:revisiondiff failonerror="true" dest="${trunkdir}"
-      destfile="${tmpdir}/diff.xml" start="161469" end="161885"/>
+    <svn:revisiondiff failonerror="true" dest="${sitedir}"
+      destfile="${tmpdir}/diff.xml" start="371996" end="439435"/>
   </target>
 
   <target name="diff-using-url" depends="dir-prep">
     <svn:revisiondiff failonerror="true"
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"
-      destfile="${tmpdir}/diff.xml" start="161469" end="161885"/>
+      svnURL="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"
+      destfile="${tmpdir}/diff.xml" start="371996" end="439435"/>
   </target>
 
   <target name="report" depends="diff-using-url">
     <style in="${tmpdir}/diff.xml" 
       out="${tmpdir}/diff.html" 
       style="src/etc/diff.xsl">
-      <param name="title" expression="svn Antlib diff report"/>
-      <param name="repo" expression="http://svn.apache.org/repos/asf/ant/antlibs/svn/trunk"/>
+      <param name="title" expression="svn Antlib Site diff report"/>
+      <param name="repo" expression="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"/>
     </style>
   </target>
 

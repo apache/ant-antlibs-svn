@@ -21,42 +21,42 @@
          default="all" xmlns:svn="antlib:org.apache.ant.svn">
 
   <property name="tmpdir" value="${java.io.tmpdir}/svnantlib"/>
-  <property name="trunkdir" value="${tmpdir}/trunk"/>
-  <property name="file" value="build.xml"/>
+  <property name="sitedir" value="${tmpdir}/svn"/>
+  <property name="file" value="index.xml"/>
 
   <target name="setup">
     <mkdir dir="${tmpdir}"/>
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/common/trunk/"
+      svnURL="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"
       dest="${tmpdir}"/>
   </target>
 
   <target name="all" depends="setup">
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
-    <svn:svn failonerror="true" dest="${trunkdir}">
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${sitedir}"/>
+    <svn:svn failonerror="true" dest="${sitedir}">
       <commandline>
         <argument value="up"/>
         <argument value="-r"/>
-        <argument value="161881"/>
+        <argument value="948574"/>
         <argument value="${file}"/>
       </commandline>
     </svn:svn>
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
-    <svn:svn failonerror="true" dest="${trunkdir}">
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${sitedir}"/>
+    <svn:svn failonerror="true" dest="${sitedir}">
       <commandline>
         <argument line="up -r HEAD ${file}" />
       </commandline>
     </svn:svn>
-    <svn:svn failonerror="true" subcommand="status ${file}" dest="${trunkdir}"/>
+    <svn:svn failonerror="true" subcommand="status ${file}" dest="${sitedir}"/>
   </target>
 
   <target name="revision-attribute">
     <mkdir dir="${tmpdir}" />
     <svn:svn
-      svnURL="http://svn.apache.org/repos/asf/ant/antlibs/common/trunk/"
+      svnURL="http://svn.apache.org/repos/asf/ant/site/ant/sources/antlibs/svn/"
       dest="${tmpdir}"
       quiet="false"
-      revision="161881"/>
+      revision="948574"/>
   </target>
 
   <target name="cleanup">

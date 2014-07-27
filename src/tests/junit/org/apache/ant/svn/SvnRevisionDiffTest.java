@@ -71,10 +71,10 @@ public class SvnRevisionDiffTest extends BuildFileTest {
         Assert.assertTrue(start > -1);
         int end = log.indexOf(">", start);
         Assert.assertTrue(end > -1);
-        Assert.assertTrue(log.indexOf("start=\"161469\"", start) > -1);
-        Assert.assertTrue(log.indexOf("start=\"161469\"", start) < end);
-        Assert.assertTrue(log.indexOf("end=\"161885\"", start) > -1);
-        Assert.assertTrue(log.indexOf("end=\"161885\"", start) < end);
+        Assert.assertTrue(log.indexOf("start=\"371996\"", start) > -1);
+        Assert.assertTrue(log.indexOf("start=\"371996\"", start) < end);
+        Assert.assertTrue(log.indexOf("end=\"439435\"", start) > -1);
+        Assert.assertTrue(log.indexOf("end=\"439435\"", start) < end);
     }
 
     private static final void assertAttributesNoURL(String log) {
@@ -87,17 +87,17 @@ public class SvnRevisionDiffTest extends BuildFileTest {
         int start = log.indexOf("<revisiondiff");
         int end = log.indexOf(">", start);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/ant/antlibs/svn/trunk\"",
+                                      + "asf/ant/site/ant/sources/antlibs/svn/\"",
                                       start)
                           > -1);
         Assert.assertTrue(log.indexOf("svnurl=\"http://svn.apache.org/repos/"
-                                      + "asf/ant/antlibs/svn/trunk\"",
+                                      + "asf/ant/site/ant/sources/antlibs/svn/\"",
                                       start)
                           < end);
     }
 
     private static final void assertModified(String log) {
-        int name = log.indexOf("<name><![CDATA[build.xml]]></name>");
+        int name = log.indexOf("<name><![CDATA[index.xml]]></name>");
         Assert.assertTrue(name > -1);
 
         int pathAfterName = log.indexOf("</path>", name);
