@@ -46,7 +46,8 @@ public class AbstractSvnTaskTest extends BuildFileTest {
     }
 
     public void testRevisionAttribute() {
-        File f = getProject().resolveFile("tmpdir/trunk/build.xml");
+        String tmpDir = getProject().getProperty("tmpdir");
+        File f = getProject().resolveFile(tmpDir + "/trunk/build.xml");
         assertTrue("starting empty", !f.exists());
 
         // used to be

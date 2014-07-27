@@ -75,8 +75,9 @@ public class SvnChangeLogTaskTest extends BuildFileTest {
     private String executeTargetAndReadLogFully(String target) 
         throws IOException {
         executeTarget(target);
+        String tmpDir = getProject().getProperty("tmpdir");
         FileReader r = new FileReader(getProject()
-                                      .resolveFile("tmpdir/log.xml"));
+                                      .resolveFile(tmpDir + "/log.xml"));
         try {
             return FileUtils.readFully(r);
         } finally {

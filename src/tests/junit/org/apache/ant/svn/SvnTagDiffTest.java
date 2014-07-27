@@ -67,8 +67,9 @@ public class SvnTagDiffTest extends BuildFileTest {
     private String executeTargetAndReadLogFully(String target) 
         throws IOException {
         executeTarget(target);
+        String tmpDir = getProject().getProperty("tmpdir");
         FileReader r = new FileReader(getProject()
-                                      .resolveFile("tmpdir/diff.xml"));
+                                      .resolveFile(tmpDir + "/diff.xml"));
         try {
             return FileUtils.readFully(r);
         } finally {

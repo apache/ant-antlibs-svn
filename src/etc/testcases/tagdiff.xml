@@ -21,7 +21,7 @@
          default="diff-with-implicit-trunk"
          xmlns:svn="antlib:org.apache.ant.svn">
 
-  <property name="tmpdir" value="tmpdir"/>
+  <property name="tmpdir" value="${java.io.tmpdir}/svnantlib"/>
   <property 
     name="baseURL"
     value="http://svn.apache.org/repos/asf/ant/antlibs/antunit/"/>
