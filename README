@@ -1,3 +1,8 @@
+*** THIS PROJECT HAS BEEN RETIRED ***
+Please refer to http://ant.apache.org/processes.html for details about
+what a retired project means and how to possibly reactivate it.
+
+
 This library provides Ant task(s) as wrapper(s) over the svn command
 line utility.
 
